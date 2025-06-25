@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>PS Official Team | Interactive Portfolio</title>
+
+  <!-- ✅ SEO Tags -->
+  <meta name="description" content="Welcome to PS Official Team – Explore the portfolio, web projects, gaming tools, SEO content and creative work by PS.">
+  <meta name="keywords" content="PS, PS Team, PS Owner, psofficialteam, PS Portfolio, PS Web Developer, PS Gaming, PS Mods, PS SEO, PS India, PS UI/UX, Perfect Shot, PS Vercel, PS Projects, PS Login Panel">
+  <meta name="author" content="PS Team">
+
+  <!-- 🌐 Open Graph for Facebook / WhatsApp -->
+  <meta property="og:title" content="PS Official Team | Portfolio & Projects" />
+  <meta property="og:description" content="Explore PS Team's best web designs, apps, login panels, games, and SEO projects.">
+  <meta property="og:image" content="ps.jpeg" />
+  <meta property="og:url" content="https://yourdomain.com/" />
+  <meta property="og:type" content="website" />
+
+  <!-- 🐦 Twitter SEO -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PS Official Team Portfolio" />
+  <meta name="twitter:description" content="Discover the interactive portfolio of PS Team with modern UI and tools.">
+  <meta name="twitter:image" content="ps.jpeg" />
+
+  <!-- ✅ Robots + Canonical -->
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yourdomain.com/" />
+
+  <!-- 🔗 Favicon (optional) -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+ <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        overflow: hidden;
+        height: 100vh;
+        transition: background 1s ease;
+        position: relative;
+    }
+
+    /* Dynamic background classes */
+    .about-bg {
+        background: linear-gradient(135deg, #1a1a2e, #16213e);
+    }
+    .projects-bg {
+        background: linear-gradient(135deg, #2d3436, #262626);
+    }
+    .pages-bg {
+        background: linear-gradient(135deg, #1c1c1c, #3a3a3a);
+    }
+    .contact-bg {
+        background: linear-gradient(135deg, #0f2027, #203a43);
+    }
+
+    #particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.7;
+        transition: opacity 0.5s ease;
+    }
+
+    .container {
+        display: flex;
+        height: 100vh;
+        flex-direction: column; /* Stack vertically on small screens */
+    }
+
+    .nav-buttons {
+        display: flex;
+        justify-content: center; /* Space buttons evenly */
+        align-items: center;
+        width: 50%; /* Full width */
+        padding: 10px 0; /* Padding for top */
+        gap: 10px; /* Space between buttons */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .nav-button {
+        flex: 1; /* Allow buttons to grow equally */
+        padding: 10px; /* Adjust padding */
+        background: none;
+        border: none;
+        border-radius: 35px;
+        color: white;
+        font-size: 14px; /* Adjust font size for mobile */
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-button.active {
+        background: none;
+    }
+
+    .content-area {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        perspective: 1200px;
+    }
+
+    .cube-container {
+        width: 70%; /* Set width to 70% */
+        height: auto; /* Allow height to adjust */
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .cube {
+        margin-top: 8%;
+        min-height: 80vh;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .content-section {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s ease, transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .content-section.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .content-section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #fff;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .content-section p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .content-section ul {
+        list-style: none;
+        margin-top: 20px;
+    }
+
+    .content-section ul li {
+        margin-bottom: 10px;
+        position: relative;
+        padding-left: 20px;
+    }
+
+    .content-section ul li:before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #4cc9f0;
+        font-size: 1.5rem;
+    }
+
+    /* Animations */
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    .floating {
+        animation: float 8s ease-in-out infinite;
+    }
+
+    .pulse {
+        animation: pulse 4s ease infinite;
+    }
+
+    /* Specific section styles */
+    .contact-form {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        margin-bottom: 15px;
+        padding: 12px;
+        border-radius: 5px;
+        border: none;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+
+    .contact-form textarea {
+        min-height: 100px;
+    }
+
+    .contact-form button {
+        padding: 12px;
+        border-radius: 5px;
+        border: none;
+        background: #4cc9f0;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .contact-form button:hover {
+        background: #3aa8d8;
+    }
+
+    .project-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        width: 100%;
+        min-height: 90%;
+    }
+
+    .project-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        height: 100%;
+        width: 100%;
+        transition: transform 0.3s, background 0.3s;
+   
+    }
+
+    .project-card:hover {
+        transform: translateY(-5px) scale(1.02);
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .project-card h3 {
+        font-size: 80%;
+        margin-bottom: 10px;
+        color: #4cc9f0;
+    }
+     
+
+    .social-links {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .social-links a {
+        color: white;
+        font-size: 1.5rem;
+        transition: transform 0.3s, color 0.3s;
+    }
+
+    .social-links a:hover {
+        color: #4cc9f0;
+        transform: translateY(-3px);
+    }
+
+    /* Background pattern */
+    .bg-pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%) -50px 0,
+            linear-gradient(-45deg, rgba(255,255,255,0.03) 25%, transparent 25%) -50px 0,
+            linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.03) 75%),
+            linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.03) 75%);
+        background-size: 100px 100px;
+        z-index: -2;
+        opacity: 0.3;
+    }
+
+    /* Media Queries for Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column; /* Stack vertically on small screens */
+            height: auto; /* Allow height to adjust */
+        }
+
+        .nav-buttons {
+            flex-direction: row; /* Row layout for buttons */
+            justify-content: space-around; /* Space buttons evenly */
+            width: 100%; /* Full width */
+        }
+
+        .nav-button {
+            flex: 1; /* Allow buttons to grow equally */
+            padding: 10px; /* Adjust padding */
+        }
+
+        .cube-container {
+            width: 70%; /* Set width to 70% */
+            height: auto; /* Allow height to adjust */
+        }
+
+        .content-section {
+            padding: 15px; /* Reduce padding for mobile */
+        }
+
+        .content-section h2 {
+            font-size: 2rem; /* Adjust heading size for mobile */
+        }
+
+        .content-section p {
+            font-size: 1rem; /* Adjust paragraph size for mobile */
+        }
+    }
+</style>
+
+</head>
+<body class="about-bg">
+    <div class="bg-pattern"></div>
+    <div id="particles-js"></div>
+    <div class="container">
+        <div class="nav-buttons">
+            <button class="nav-button active" data-section="about">About</button>
+            <button class="nav-button" data-section="projects">Projects</button>
+            <button class="nav-button" data-section="pages">My Pages</button>
+            <button class="nav-button" data-section="contact">Contact</button>
+        </div>
+        <div class="content-area">
+            <div class="cube-container floating">
+                <div class="cube">
+                    <!-- About Section -->
+                    <div class="content-section active" id="about-section">
+                        <div>
+                            <h2 style="color: #f53dc4;">About Me</h2>
+                            <p>Hello! I'm a passionate developer with expertise in web technologies. I love creating interactive and beautiful user experiences.</p>
+                            <p>With over 5 years of experience, I've worked on various projects ranging from small business websites to large-scale web applications.</p>
+                            <ul>
+                                 <li style="color: #4cc9f0;">Seo Expert</li>
+                                <li style="color: red;">Frontend Development</li>
+                                <li style="color: rgb(83, 237, 63);">UI/UX Design</li>
+                                <li style="color: #ebf701;">Responsive Web Design</li>
+                                <li style="color: #e259dd;">JavaScript Frameworks</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Projects Section -->
+                    <div class="content-section" id="projects-section">
+                        <div>
+                            <h2 style="color: #48ecb5;">Project</h2>
+                            <div class="project-grid">
+                                <div class="project-card">
+                                    <h3>E-commerce Platform</h3>
+                                    <p style="font-size: 70%;">A full-featured online store with payment integration and inventory management.</p>
+                                </div>
+                                <div class="project-card">
+                                    <h3>Portfolio Website</h3>
+                                    <p style="font-size: 70%;">A responsive portfolio site with smooth animations and dark mode.</p>
+                                </div>
+                                <div class="project-card">
+                                    <h3>Task Management App</h3>
+                                    <p style="font-size: 70%;">A productivity app with drag-and-drop functionality and team collaboration.</p>
+                                </div>
+                                <div class="project-card">
+                                    <h3>Weather Dashboard</h3>
+                                    <p style="font-size: 70%;">Real-time weather information with interactive maps and forecasts.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pages Section -->
+                    <div class="content-section" id="pages-section">
+                        <div>
+                            <h2 style="color: #84f03b;">Pages</h2>
+                            <p style="font-style: italic;">Here are some of my featured pages and content:</p>
+                                  <div class="social-links">
+                                <a href="https://www.instagram.com/ps_official_team_owner?igsh=MTlxZHRpcmhyM3Y2ag==" title="Instagram">📸</a> <!-- Added Instagram -->
+                               <a href="#" title="YouTube">📹</a> <!-- Added YouTube -->
+                                <a href="#" title="GitHub">👨‍💻</a>
+                                <a href="#" title="LinkedIn">💼</a>
+                                <a href="#" title="Twitter">🐦</a>
+                                <a href="#" title="Dribbble">🏀</a>
+                            </div>
+                       
+                            <ul>
+                                <li style="color: #4cc9f0;">Blog - Web Development Tips</li>
+                                <li style="color: red;">Tutorials - Interactive Coding Lessons</li>
+                                <li style="color: rgb(83, 237, 63);">Resources - Free Tools and Templates</li>
+                                <li style="color: #ebf701;">Gallery - My Design Work</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Contact Section -->
+                    <div class="content-section" id="contact-section">
+                        <div>
+                            <h2 style="color: #ebf701;">Contact Me</h2>
+                            <form class="contact-form">
+                                <input type="text" placeholder="Your Name" required>
+                                <input type="email" placeholder="Your Email" required>
+                                <textarea placeholder="Your Message" required></textarea>
+                                <button type="submit">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize particles.js background
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#4cc9f0"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#4cc9f0",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Navigation
+        const navButtons = document.querySelectorAll('.nav-button');
+        const contentSections = document.querySelectorAll('.content-section');
+        const cubeContainer = document.querySelector('.cube-container');
+        const body = document.body;
+
+        // Update the active section and animate the transition
+        function updateActiveSection(sectionId) {
+            // Update nav button active state
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+            
+            // Update body background class
+            body.className = `${sectionId}-bg`;
+            
+            // Hide all sections
+            contentSections.forEach(section => section.classList.remove('active'));
+            
+            // Show the active section with animation
+            const activeSection = document.getElementById(`${sectionId}-section`);
+            activeSection.classList.add('active');
+            
+            // Apply cube rotation animation based on section
+            switch(sectionId) {
+                case 'about':
+                    cubeContainer.style.transform = 'rotateY(0deg) rotateX(5deg)';
+                    break;
+                case 'projects':
+                    cubeContainer.style.transform = 'rotateY(-90deg) rotateX(5deg)';
+                    break;
+                case 'pages':
+                    cubeContainer.style.transform = 'rotateY(-180deg) rotateX(5deg)';
+                    break;
+                case 'contact':
+                    cubeContainer.style.transform = 'rotateY(90deg) rotateX(5deg)';
+                    break;
+            }
+            
+            // Apply pulse animation to the cube
+            cubeContainer.classList.add('pulse');
+            setTimeout(() => {
+                cubeContainer.classList.remove('pulse');
+            }, 1000);
+        }
+
+        // Set up event listeners for nav buttons
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const section = button.dataset.section;
+                updateActiveSection(section);
+            });
+        });
+        
+        // Initialize with about section active
+        updateActiveSection('about');
+    });
+</script>
+
+</body>
+</html>
