@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Particle Sphere & Ring</title>
+    <title>3D Interactive Sphere - PS</title>
     <style>
         body {
             margin: 0;
             background-color: #000;
             overflow: hidden;
-            font-family: sans-serif;
+            touch-action: none; /* Mobile par scrolling rokne ke liye */
         }
         canvas {
             display: block;
@@ -19,9 +19,10 @@
 <body>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
     <script>
-        let scene, camera, renderer, sphereParticles, ringParticles;
+        let scene, camera, renderer, sphereParticles, controls;
 
         function init() {
             // 1. Scene Setup
@@ -34,41 +35,37 @@
             // 3. Renderer Setup
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
             document.body.appendChild(renderer.domElement);
 
-            // 4. Create Sphere Particles (The Blue Core)
-            const sphereGeometry = new THREE.SphereGeometry(1.5, 64, 64);
+            // 4. Orbit Controls (Zoom aur Rotation ke liye)
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true; // Smooth movement
+            controls.dampingFactor = 0.05;
+            controls.enablePan = false; // Sirf zoom aur rotate rakha hai
+
+            // 5. Create Sphere Particles (Blue Core)
+            // Particle density badhane ke liye segments 100 kiye hain
+            const sphereGeometry = new THREE.SphereGeometry(1.8, 100, 100);
             const sphereMaterial = new THREE.PointsMaterial({
                 color: 0x00aaff,
-                size: 0.02,
+                size: 0.015,
                 transparent: true,
-                opacity: 0.8
+                opacity: 0.9
             });
             sphereParticles = new THREE.Points(sphereGeometry, sphereMaterial);
             scene.add(sphereParticles);
 
-            // 5. Create Ring Particles (The Green Ring)
-            const ringGeometry = new THREE.TorusGeometry(2.5, 0.3, 16, 100);
-            const ringMaterial = new THREE.PointsMaterial({
-                color: 0x00ffcc,
-                size: 0.015,
-                transparent: true,
-                opacity: 0.6
-            });
-            ringParticles = new THREE.Points(ringGeometry, ringMaterial);
-            ringParticles.rotation.x = Math.PI / 2; // Ring ko horizontal karne ke liye
-            scene.add(ringParticles);
-
             // 6. Background Stars
             const starGeometry = new THREE.BufferGeometry();
-            const starCount = 5000;
+            const starCount = 3000;
             const posArray = new Float32Array(starCount * 3);
 
             for(let i=0; i < starCount * 3; i++) {
                 posArray[i] = (Math.random() - 0.5) * 20;
             }
             starGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-            const starMaterial = new THREE.PointsMaterial({ size: 0.005, color: 0xffffff });
+            const starMaterial = new THREE.PointsMaterial({ size: 0.007, color: 0xffffff });
             const stars = new THREE.Points(starGeometry, starMaterial);
             scene.add(stars);
 
@@ -79,11 +76,12 @@
         function animate() {
             requestAnimationFrame(animate);
 
-            // Rotation effect
-            sphereParticles.rotation.y += 0.002;
-            ringParticles.rotation.z += 0.005;
-            
-            // Mouse movement se thoda tilt (Optional interactive touch)
+            // Sphere halka sa rotate hota rahega automatic bhi
+            sphereParticles.rotation.y += 0.001;
+
+            // Controls ko update karna zaroori hai damping ke liye
+            controls.update();
+
             renderer.render(scene, camera);
         }
 
